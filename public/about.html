@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Live Kitchen | About</title>
+  <link rel="stylesheet" href="/styles/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <div class="brand">
+        <img src="/images/logo.svg" alt="Live Kitchen logo" class="logo" />
+        <span class="brand-name">Live Kitchen</span>
+      </div>
+      <nav class="nav">
+        <a href="/index.html">Home</a>
+        <a href="/about.html" class="active">About</a>
+        <a href="/catering.html">Catering</a>
+        <a href="/summer.html">Menu</a>
+        <a href="/contact.html" class="btn">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <h1>Our Story</h1>
+        <p>From a small family kitchen to a vibrant neighborhood favorite, Live Kitchen celebrates flavors made fresh in front of you.</p>
+      </div>
+    </section>
+
+    <section class="content container">
+      <div class="grid two">
+        <div>
+          <h2>Mission</h2>
+          <p>We serve honest, bold, and fresh dishes. We source good ingredients and cook them with care—right where you can see us.</p>
+          <h2>Values</h2>
+          <ul>
+            <li>Freshness first</li>
+            <li>Community and hospitality</li>
+            <li>Transparency in our kitchen</li>
+          </ul>
+        </div>
+        <div>
+          <img src="/images/pic1.svg" alt="Chefs cooking live" class="rounded" />
+          <img src="/images/pic3.svg" alt="Colorful dishes" class="rounded mt" />
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© <span id="year"></span> Live Kitchen. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
+

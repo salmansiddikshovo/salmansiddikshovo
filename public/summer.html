@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Live Kitchen | Menu</title>
+  <link rel="stylesheet" href="/styles/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <div class="brand">
+        <img src="/images/logo.svg" alt="Live Kitchen logo" class="logo" />
+        <span class="brand-name">Live Kitchen</span>
+      </div>
+      <nav class="nav">
+        <a href="/index.html">Home</a>
+        <a href="/about.html">About</a>
+        <a href="/catering.html">Catering</a>
+        <a href="/summer.html" class="active">Menu</a>
+        <a href="/contact.html" class="btn">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <h1>Menu</h1>
+        <p>Explore our seasonal specials and classics.</p>
+      </div>
+    </section>
+
+    <section class="content container">
+      <div id="menu-grid" class="grid"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© <span id="year"></span> Live Kitchen. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    async function loadMenu() {
+      const res = await fetch('/api/menu');
+      const items = await res.json();
+      const grid = document.getElementById('menu-grid');
+      grid.innerHTML = items.map(item => `
+        <article class="card">
+          <img src="${item.image_url || '/images/placeholder.svg'}" alt="${item.name}" />
+          <div class="card-body">
+            <h3>${item.name}</h3>
+            <p>${item.description}</p>
+            <strong>$${(item.price_cents/100).toFixed(2)}</strong>
+          </div>
+        </article>
+      `).join('');
+    }
+    document.getElementById('year').textContent = new Date().getFullYear();
+    loadMenu();
+  </script>
+</body>
+</html>
+
