@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Live Kitchen | Contact</title>
+  <link rel="stylesheet" href="/styles/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <div class="brand">
+        <img src="/images/logo.svg" alt="Live Kitchen logo" class="logo" />
+        <span class="brand-name">Live Kitchen</span>
+      </div>
+      <nav class="nav">
+        <a href="/index.html">Home</a>
+        <a href="/about.html">About</a>
+        <a href="/catering.html">Catering</a>
+        <a href="/summer.html">Menu</a>
+        <a href="/contact.html" class="active btn">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <h1>Contact Us</h1>
+        <p>We’d love to hear from you. Send us a message and we’ll get back soon.</p>
+      </div>
+    </section>
+
+    <section class="content container">
+      <div class="grid two">
+        <form id="contact-form" class="card" onsubmit="submitContact(event)">
+          <div class="card-body">
+            <label>Name
+              <input type="text" name="name" required />
+            </label>
+            <label>Email
+              <input type="email" name="email" required />
+            </label>
+            <label>Phone
+              <input type="tel" name="phone" />
+            </label>
+            <label>Message
+              <textarea name="message" rows="5" required></textarea>
+            </label>
+            <button class="btn primary" type="submit">Send</button>
+            <p id="status" role="status" aria-live="polite"></p>
+          </div>
+        </form>
+        <div>
+          <h2>Visit</h2>
+          <p>123 Market Street<br/>Foodtown, FT 12345</p>
+          <p><a href="tel:+1234567890">(123) 456-7890</a><br/>
+          <a href="mailto:hello@livekitchen.example">hello@livekitchen.example</a></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© <span id="year"></span> Live Kitchen. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    async function submitContact(e) {
+      e.preventDefault();
+      const form = document.getElementById('contact-form');
+      const data = Object.fromEntries(new FormData(form).entries());
+      const status = document.getElementById('status');
+      status.textContent = 'Sending...';
+      try {
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        if (!res.ok) throw new Error('Failed');
+        status.textContent = 'Thanks! We will get back to you soon.';
+        form.reset();
+      } catch (err) {
+        status.textContent = 'Something went wrong. Please try again.';
+      }
+    }
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
+

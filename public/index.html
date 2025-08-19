@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Live Kitchen | Home</title>
+  <link rel="stylesheet" href="/styles/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <div class="brand">
+        <img src="/images/logo.svg" alt="Live Kitchen logo" class="logo" />
+        <span class="brand-name">Live Kitchen</span>
+      </div>
+      <nav class="nav">
+        <a href="/index.html" class="active">Home</a>
+        <a href="/about.html">About</a>
+        <a href="/catering.html">Catering</a>
+        <a href="/summer.html">Menu</a>
+        <a href="/contact.html" class="btn">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1>Fresh. Vibrant. Made Live.</h1>
+        <p>Authentic flavors crafted in our open kitchen. Dine-in, takeout, and catering for every occasion.</p>
+        <div class="hero-actions">
+          <a href="#featured" class="btn primary">Featured Dishes</a>
+          <a href="/contact.html" class="btn">Book Catering</a>
+        </div>
+      </div>
+      <video class="hero-video" autoplay muted loop playsinline poster="/images/poster.svg">
+        <source src="/images/restaurant-ad.mp4" type="video/mp4" />
+      </video>
+    </section>
+
+    <section id="featured" class="featured">
+      <div class="container">
+        <h2>Chef's Picks</h2>
+        <div id="featured-grid" class="grid"></div>
+      </div>
+    </section>
+
+    <section class="testimonials">
+      <div class="container">
+        <h2>What Guests Say</h2>
+        <div class="quotes">
+          <blockquote>“The best butter chicken in town. Period.” <span>— Asha K.</span></blockquote>
+          <blockquote>“Live Kitchen catered our event flawlessly!” <span>— Omar R.</span></blockquote>
+          <blockquote>“Fresh, fast, and full of flavor.” <span>— Mei L.</span></blockquote>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© <span id="year"></span> Live Kitchen. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Fetch and render featured menu items
+    async function loadFeatured() {
+      try {
+        const res = await fetch('/api/menu');
+        const items = await res.json();
+        const featured = items.filter(i => i.is_featured);
+        const grid = document.getElementById('featured-grid');
+        grid.innerHTML = featured.map(item => `
+          <article class="card">
+            <img src="${item.image_url || '/images/placeholder.svg'}" alt="${item.name}" />
+            <div class="card-body">
+              <h3>${item.name}</h3>
+              <p>${item.description}</p>
+              <strong>$${(item.price_cents/100).toFixed(2)}</strong>
+            </div>
+          </article>
+        `).join('');
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    document.getElementById('year').textContent = new Date().getFullYear();
+    loadFeatured();
+  </script>
+</body>
+<!-- Additional content may be present in other pages. -->
+</html>
+
